@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Go to the starting folder
+cd -- "$(dirname "$BASH_SOURCE")"
+
+echo "Pour modifier certaines options ⚙️  éditez les préférences en haut de ces fichiers textes :"
+echo "    preferences.js"
+
+echo "Pour rechargez avec les modifications 🔄 faites Cmd+Maj+R dans Chrome."
+
+echo ""
+echo "Adresse du projet : 🌍  http://localhost:8000"
+echo "Utilisez Chrome SVP :)"
+
+echo ""
+echo "❌ Utilisez Ctrl+C ou fermez la fenêtre pour quitter le serveur. ❌"
+echo ""
+
+python -m SimpleHTTPServer 8000 &>/dev/null

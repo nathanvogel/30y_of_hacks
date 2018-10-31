@@ -28,3 +28,7 @@ canvas[resize] {
   mix-blend-mode: multiply;
   opacity: 0;
 }
+
+body > div.dg.ac {
+  z-index: 100;
+}

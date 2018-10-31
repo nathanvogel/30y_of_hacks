@@ -21,6 +21,7 @@
     "PIXI": true,
     "anime": true,
     "OPTIONS": true,
-    "MorphingPath": true
+    "MorphingPath": true,
+    "data": true
   }
 }

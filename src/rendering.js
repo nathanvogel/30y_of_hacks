@@ -66,11 +66,22 @@ function setupFilters() {
   filter_ascii = new PIXI.filters.AsciiFilter(OPTIONS.asciiScale);
   filter_ascii.enabled = OPTIONS.asciiEnabled;
   filter_ascii.global = true;
+  var f1 = gui.addFolder("AsciiFilter");
+  f1.add(filter_ascii, "enabled");
+  f1.add(filter_ascii, "size", 1, 40);
+  f1.open();
   // Bloom filter
+  // filter_bloom = new PIXI.filters.AdvancedBloomFilter({
+  //   threshold: 0.5,
+  //   bloomScale: 1,
+  //   brightness: 5,
+  //   blur: OPTIONS.bloomBlur,
+  //   quality: OPTIONS.bloomQuality,
+  //   resolution: OPTIONS.bloomResolution
+  // });
   filter_bloom = new PIXI.filters.BloomFilter(
     OPTIONS.bloomBlur,
-    OPTIONS.bloomQuality,
-    OPTIONS.bloomResolution
+    OPTIONS.bloomQuality
   );
   filter_bloom.enabled = OPTIONS.bloomEnabled;
   filter_bloom.global = true;
@@ -79,8 +90,10 @@ function setupFilters() {
 
 function gameLoop(delta) {
   paperSprite.texture.update();
-  filter_displacement.maskSprite.transform.position.x += 1.8;
-  filter_displacement.maskSprite.transform.position.y += 1.8;
+  filter_displacement.maskSprite.transform.position.x +=
+    OPTIONS.displacementSpeedX;
+  filter_displacement.maskSprite.transform.position.y +=
+    OPTIONS.displacementSpeedY;
 }
 
 function toggleDisplacement() {

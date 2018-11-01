@@ -66,11 +66,14 @@ function createBlock(data) {
   eventBlock.style.left = blockDistance * (data.index + 1) + "px";
   container.appendChild(eventBlock);
 
-  // Now create and append to iDiv
   var title = document.createElement("div");
   title.className = "block-title";
   title.textContent = data.name;
   eventBlock.appendChild(title);
+  var description = document.createElement("div");
+  description.className = "block-description";
+  description.innerHTML = data.description;
+  eventBlock.appendChild(description);
 }
 
 function moveToBlockBy(step) {

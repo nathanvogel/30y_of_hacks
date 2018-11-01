@@ -49,5 +49,11 @@ function onKeyDown(event) {
     case "d":
       toggleDisplacement();
       break;
+    case "left":
+      moveToBlockBy(-1);
+      break;
+    case "right":
+      moveToBlockBy(1);
+      break;
   }
 }

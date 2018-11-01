@@ -37,6 +37,7 @@ canvas[resize] {
   opacity: 0;
 }
 
+/* dat.gui */
 body > div.dg.ac {
   z-index: 100;
 }
@@ -47,15 +48,19 @@ body > div.dg.ac {
   background-color: transparent;
   transition: transform 0.6s;
   transform: "translateY(0px)";
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .block {
   background-color: #00000066;
   border: 1px white solid;
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 40%;
+  height: 60%;
   background-color: #000;
+  margin: auto; /* Important */
 }
 
 .block-title {

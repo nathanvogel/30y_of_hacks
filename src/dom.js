@@ -39,7 +39,6 @@ function w() {
 function h() {
   return window.innerHeight;
 }
-var blockDistance = w() / 2;
 var container;
 var currentBlock = 0;
 
@@ -55,7 +54,7 @@ function initBlocks() {
 function prepareDataset() {
   for (let i = 0; i < dataset.length; i++) {
     dataset[i].index = i;
-    dataset[i].id = "event-" + i;
+    dataset[i].id = indexToId(i);
   }
 }
 
@@ -63,7 +62,6 @@ function createBlock(data) {
   var eventBlock = document.createElement("div");
   eventBlock.id = data.id;
   eventBlock.className = "block";
-  eventBlock.style.left = blockDistance * (data.index + 1) + "px";
   container.appendChild(eventBlock);
 
   var title = document.createElement("div");
@@ -80,6 +78,10 @@ function moveToBlockBy(step) {
   goToBlock(currentBlock + step);
 }
 
+function indexToId(index) {
+  return "event-" + index;
+}
+
 function goToBlock(index) {
   if (index >= dataset.length) {
     index = 0;
@@ -89,5 +91,6 @@ function goToBlock(index) {
   }
   var lastIndex = currentBlock;
   currentBlock = index;
-  container.style.transform = "translateX(" + -index * blockDistance + "px)";
+  var e = document.getElementById(indexToId(currentBlock));
+  container.style.transform = "translateX(" + -e.offsetLeft + "px)";
 }

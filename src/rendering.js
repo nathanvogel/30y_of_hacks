@@ -94,10 +94,12 @@ function setupFilters() {
   filter_ascii = new PIXI.filters.AsciiFilter(OPTIONS.asciiScale);
   filter_ascii.enabled = OPTIONS.asciiEnabled;
   filter_ascii.global = true;
-  var f1 = gui.addFolder("AsciiFilter");
-  f1.add(filter_ascii, "enabled");
-  f1.add(filter_ascii, "size", 1, 40);
-  f1.open();
+
+  // var f1 = gui.addFolder("AsciiFilter");
+  // f1.add(filter_ascii, "enabled");
+  // f1.add(filter_ascii, "size", 1, 40);
+  // f1.open();
+
   // Bloom filter
   // filter_bloom = new PIXI.filters.AdvancedBloomFilter({
   //   threshold: 0.5,

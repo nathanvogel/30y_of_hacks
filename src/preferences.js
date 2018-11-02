@@ -20,13 +20,13 @@ var OPTIONS = {
   transparentPixiCanvas: true
 };
 
-var gui = new dat.gui.GUI();
-gui.close();
-
-var f2 = gui.addFolder("DisplacementFilter");
-f2.add(OPTIONS, "displacementSpeedX", 0.1, 10);
-f2.add(OPTIONS, "displacementSpeedY", 0.1, 10);
-f2.open();
+// var gui = new dat.gui.GUI();
+// gui.close();
+//
+// var f2 = gui.addFolder("DisplacementFilter");
+// f2.add(OPTIONS, "displacementSpeedX", 0.1, 10);
+// f2.add(OPTIONS, "displacementSpeedY", 0.1, 10);
+// f2.open();
 
 var COLORS = {
   incident: [[["white", 0.05], ["blue", 0.8], ["black", 1]]],

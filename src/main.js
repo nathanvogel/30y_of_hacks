@@ -8,28 +8,32 @@ var background = new Path.Rectangle({
   fillColor: "#000000"
 });
 
-var circle2 = new Path.Circle({
-  radius: 150,
-  fillColor: "#FFFFFF", //"#FDE9B5"
-  opacity: 1,
-  position: new Point(500, 100)
-});
+// var circle2 = new Path.Circle({
+//   radius: 150,
+//   fillColor: "#FFFFFF", //"#FDE9B5"
+//   opacity: 1,
+//   position: new Point(500, 100)
+// });
 
-var circle = new Path.Circle({
+var tmp = new Path.Circle({
   radius: 50,
   fillColor: "#FBFBFB", //"#FDE9B5"
   opacity: 1,
   position: new Point(view.bounds.width / 2, view.bounds.height / 2)
 });
-circle.visible = true;
-circle.applyMatrix = false;
+tmp.visible = true;
+tmp.applyMatrix = false;
 
-var backgroundStuff = [];
-for (var j = 0; j < 3; j++) {}
-
-var plants = [];
-
-var circle_position_goal = circle.position;
+var circles = [];
+for (var j = 0; j < 3; j++) {
+  var newC = {
+    goal_pos: tmp.position.clone(),
+    goal_scaling: 1,
+    shape: tmp.clone()
+  };
+  circles.push(newC);
+}
+tmp.remove();
 
 // var anime_circle = anime({
 //   targets: circle.position,
@@ -44,8 +48,11 @@ var circle_position_goal = circle.position;
 
 // =========== ANIMATION ==============
 function onFrame(event) {
-  // circle.position = p;
-  // background.fillColor = event.count % 30 < 15 ? "#000000" : "#555555";
+  for (var i = 0; i < circles.length; i++) {
+    var c = circles[i];
+    c.shape.position += (c.goal_pos - c.shape.position) * 0.033;
+    // console.log(circle.position);
+  }
 }
 
 // =========== INTERACTION ==============
@@ -55,41 +62,33 @@ function onMouseMove(event) {
 
 function onKeyDown(event) {
   switch (event.key) {
-    case "space":
-      // Skip all current anims
-      var max = plants.length;
-      for (var i = 0; i < max; i++) {
-        var plant = plants[i];
-        plant.animation.pause();
-        plant.animation.seek(plant.animation.duration);
-      }
-      break;
-    case "d":
-      toggleDisplacement();
-      break;
+    // case "d":
+    //   toggleDisplacement();
+    //   break;
     case "left":
       moveToBlockBy(-1);
       break;
     case "right":
       moveToBlockBy(1);
       break;
+    case "a":
+      goToBlock(25);
+      break;
+    case "s":
+      goToBlock(27);
+      break;
+    case "d":
+      goToBlock(45);
+      break;
   }
 }
 
 window.onNewVisual_anim = function(datapoint) {
-  // circle.fillColor = "yellow";
-
+  // ### Color
   var possibleStops = COLORS[datapoint.type];
   var stops = possibleStops[Math.floor(Math.random() * possibleStops.length)];
-  circle.fillColor = {
-    gradient: {
-      stops: stops,
-      radial: true
-    },
-    origin: circle.position,
-    destination: circle.bounds.rightCenter
-  };
 
+  // ### Scale
   var circle_scale = 1;
   if (datapoint.visualValueSuffix.indexOf("$") >= 0) {
     circle_scale = map_range(
@@ -113,9 +112,36 @@ window.onNewVisual_anim = function(datapoint) {
     console.log("Circle standard scale: ", circle_scale);
   }
 
-  circle.scaling = circle_scale;
-
-  circle2.visible = !circle2.visible;
+  var goal = getRandomPos(circle_scale);
+  for (var i = 0; i < circles.length; i++) {
+    var c = circles[i];
+    c.shape.fillColor = {
+      gradient: {
+        stops: stops,
+        radial: true
+      },
+      origin: c.shape.position,
+      destination: c.shape.bounds.rightCenter
+    };
+    c.shape.scaling = circle_scale;
+    // ### Position
+    c.goal_pos = goal;
+    var multipleBlobsFactor = map_range(circle_scale, 0.3, 10, 0.4, 0.0);
+    if (Math.random() < 0.4) {
+      goal = getRandomPos(circle_scale);
+    }
+  }
 };
+
+function getRandomPos(scaling) {
+  var middleFactor = map_range(scaling, 0.3, 10, 1, 0.1);
+  return (
+    view.bounds.center +
+    new Point(
+      (Math.random() - 0.5) * middleFactor * view.bounds.width,
+      (Math.random() - 0.5) * middleFactor * view.bounds.height
+    )
+  );
+}
 
 paperReady();

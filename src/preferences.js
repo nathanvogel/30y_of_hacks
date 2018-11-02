@@ -30,11 +30,11 @@ f2.open();
 
 var COLORS = {
   incident: [[["white", 0.05], ["blue", 0.8], ["black", 1]]],
-  breach: [[["orange", 0.05], ["red", 0.8], ["black", 1]]],
+  breach: [[["aqua", 0.05], ["blue", 0.8], ["black", 1]]],
   steal: [[["green", 0.05], ["#119944", 0.8], ["black", 1]]],
   theory: [[["yellow", 0.05], ["yellow", 0.5], ["black", 1]]],
   media: [[["blue", 0.05], ["aqua", 0.8], ["black", 1]]],
   foundation: [[["purple", 0.05], ["purple", 0.7], ["black", 1]]],
-  law: [[["maroon", 0.5], ["olive", 0.8], ["black", 1]]],
+  law: [[["black", 0.5], ["blue", 0.8], ["black", 1]]],
   meeting: [[["teal", 0.5], ["navy", 0.8], ["black", 1]]]
 };

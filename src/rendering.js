@@ -122,7 +122,7 @@ function setupFilters() {
     OPTIONS.bloomBlur,
     OPTIONS.bloomQuality
   );
-  filter_bloom.enabled = OPTIONS.bloomEnabled;
+  filter_bloom.enabled = true;
   filter_bloom.global = true;
   paperSprite.filters = [filter_displacement, filter_ascii, filter_bloom];
   // backgroundSprite.filters = [filter_displacement, filter_ascii, filter_bloom];
@@ -141,6 +141,7 @@ function toggleDisplacement() {
 }
 
 function onNewVisual_renderer(datapoint) {
+  // ASCII scale
   var ascii_scale = OPTIONS.asciiScale;
   if (datapoint.visualValueSuffix.indexOf("$") >= 0) {
     ascii_scale = map_range(
@@ -154,8 +155,8 @@ function onNewVisual_renderer(datapoint) {
     console.log("Ascii scale: ", ascii_scale);
   }
   filter_ascii.size = ascii_scale;
-  // switch (datapoint.type) {
-  //   case ""
-  //
-  // }
+
+  // Bloom
+  // blur = map_range(datapoint.year, 1989, 2019, 0, 6, true);
+  filter_bloom.enabled = datapoint.year >= 2000;
 }

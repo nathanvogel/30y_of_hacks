@@ -158,5 +158,5 @@ function onNewVisual_renderer(datapoint) {
 
   // Bloom
   // blur = map_range(datapoint.year, 1989, 2019, 0, 6, true);
-  filter_bloom.enabled = datapoint.year > 2000;
+  filter_bloom.enabled = datapoint.year >= 2000;
 }

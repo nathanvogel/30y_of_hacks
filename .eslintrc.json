@@ -21,7 +21,10 @@
     "PIXI": true,
     "anime": true,
     "OPTIONS": true,
+    "COLORS": true,
     "MorphingPath": true,
+    "map_range": true,
+    "gui": true,
     "dat": true
   }
 }

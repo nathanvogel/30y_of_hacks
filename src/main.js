@@ -1,5 +1,7 @@
 /* globals project view Path Point */
+/* globals toggleDisplacement moveToBlockBy paperReady */
 /* exported onFrame onMouseMove onMouseUp onKeyDown */
+/* eslint no-unused-vars: 0 */
 
 var background = new Path.Rectangle({
   size: view.bounds.size,
@@ -13,6 +15,7 @@ var circle = new Path.Circle({
   position: new Point(view.bounds.width / 4, view.bounds.height / 2)
 });
 circle.visible = true;
+circle.applyMatrix = false;
 
 var backgroundStuff = [];
 for (var j = 0; j < 3; j++) {}
@@ -78,12 +81,21 @@ window.onNewVisual_anim = function(datapoint) {
     destination: circle.bounds.rightCenter
   };
 
+  var circle_scale = 1;
   if (datapoint.visualValueSuffix.indexOf("$") >= 0) {
-    ascii_scale = map_range(datapoint.visualValue, 1000000, 1000000000, 16, 6);
-    console.log("Ascii scale: ", ascii_scale);
+    circle_scale = map_range(
+      datapoint.visualValue,
+      1000000,
+      1000000000,
+      0.3,
+      6
+    );
+    console.log("Circle scale: ", circle_scale);
   }
 
-  console.log(anime_circle);
+  circle.scaling = circle_scale;
+
+  // console.log(anime_circle);
   // circle.bounds.width =
 };
 

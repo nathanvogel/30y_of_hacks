@@ -1,3 +1,6 @@
+/* exported moveToBlockBy initDom */
+/* globals dataReady */
+
 var dataset = [];
 
 $.getJSON("data/events.json", json => {
@@ -7,6 +10,9 @@ $.getJSON("data/events.json", json => {
       json.splice(i, 1);
     }
   }
+  json.sort((a, b) => {
+    return a.timestamp - b.timestamp;
+  });
   dataset = json;
   dataReady();
 });

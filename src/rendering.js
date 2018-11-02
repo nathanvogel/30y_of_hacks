@@ -1,4 +1,5 @@
-/* exported onNewVisual_renderer */
+/* exported onNewVisual_renderer initPixi toggleDisplacement */
+/* globals pixiReady */
 
 // PixiJS checks
 let type = "WebGL";
@@ -42,8 +43,6 @@ paperSprite.visible = true;
 
 // Runtimes
 var filter_displacement, filter_ascii, filter_bloom;
-var loaded = false;
-var lastDatapoint = null;
 
 PIXI.loader
   .add([{ name: "map", url: OPTIONS.displacementFile }])
@@ -109,7 +108,7 @@ function setupFilters() {
   app.stage.filters = [filter_displacement, filter_ascii, filter_bloom];
 }
 
-function gameLoop(delta) {
+function gameLoop(/* arg1 = delta */) {
   paperSprite.texture.update();
   filter_displacement.maskSprite.transform.position.x +=
     OPTIONS.displacementSpeedX;
@@ -124,7 +123,14 @@ function toggleDisplacement() {
 function onNewVisual_renderer(datapoint) {
   var ascii_scale = OPTIONS.asciiScale;
   if (datapoint.visualValueSuffix.indexOf("$") >= 0) {
-    ascii_scale = map_range(datapoint.visualValue, 1000000, 1000000000, 16, 6);
+    ascii_scale = map_range(
+      datapoint.visualValue,
+      1000000,
+      1000000000,
+      16,
+      6,
+      false
+    );
     console.log("Ascii scale: ", ascii_scale);
   }
   filter_ascii.size = ascii_scale;

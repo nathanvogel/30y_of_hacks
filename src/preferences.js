@@ -1,4 +1,4 @@
-/* exported OPTIONS */
+/* exported OPTIONS COLORS */
 
 /***************************************
  * PREFERENCES
@@ -29,7 +29,8 @@ f2.add(OPTIONS, "displacementSpeedY", 0.1, 10);
 f2.open();
 
 var COLORS = {
-  incident: [[["yellow", 0.05], ["red", 0.8], ["black", 1]]],
+  incident: [[["yellow", 0.05], ["orange", 0.8], ["black", 1]]],
+  breach: [[["orange", 0.05], ["red", 0.8], ["black", 1]]],
   steal: [[["green", 0.05], ["#119944", 0.8], ["black", 1]]],
   theory: [[["yellow", 0.05], ["yellow", 0.5], ["black", 1]]],
   media: [[["blue", 0.05], ["aqua", 0.8], ["black", 1]]],

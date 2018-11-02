@@ -90,10 +90,14 @@ function goToBlock(newIndex) {
   updateOldBlocks(lastIndex, newIndex);
   currentBlock = newIndex;
   updateNewBlocks();
-  var e = document.getElementById(indexToId(currentBlock));
-  container.style.transform = "translateX(" + -e.parentNode.offsetLeft + "px)";
+  updateContainer();
   window.onNewVisual_renderer(dataset[currentBlock]);
   window.onNewVisual_anim(dataset[currentBlock]);
+}
+
+function updateContainer() {
+  var e = document.getElementById(indexToId(currentBlock));
+  container.style.transform = "translateX(" + -e.parentNode.offsetLeft + "px)";
 }
 
 function updateOldBlocks(lastIndex) {
@@ -120,3 +124,8 @@ function updateNewBlocks() {
     // );
   }
 }
+
+window.addEventListener("resize", () => {
+  updateNewBlocks();
+  updateContainer();
+});

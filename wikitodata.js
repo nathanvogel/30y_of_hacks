@@ -53,7 +53,7 @@ function analyseLI(e) {
   // console.log(e);
   // console.log(Date.parse(e.textContent));
   var timestamp = findDate(e.textContent);
-  console.log(timestamp);
+  // console.log(timestamp);
 
   var newData = {
     name: "",
@@ -61,7 +61,7 @@ function analyseLI(e) {
     descriptionText: e.textContent,
     source: "https://en.wikipedia.org/wiki/List_of_security_hacking_incidents",
     year: year,
-    timestamp: Date.parse("" + year),
+    timestamp: timestamp,
     type: "incident",
     visualValue: 0
   };
@@ -81,7 +81,9 @@ function findDate(str) {
   // Parse our string.
   var timestamp = Date.parse(text);
   // If parsing failed, return the beginning of the year by default.
-  if (!timestamp) return yearDate();
+  if (!timestamp) {
+    return yearDate();
+  }
 
   return timestamp;
 }

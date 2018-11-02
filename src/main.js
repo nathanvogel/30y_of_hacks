@@ -8,6 +8,13 @@ var background = new Path.Rectangle({
   fillColor: "#000000"
 });
 
+var circle2 = new Path.Circle({
+  radius: 150,
+  fillColor: "#AAAAAA", //"#FDE9B5"
+  opacity: 1,
+  position: new Point(500, 100)
+});
+
 var circle = new Path.Circle({
   radius: 50,
   fillColor: "#FBFBFB", //"#FDE9B5"
@@ -22,16 +29,18 @@ for (var j = 0; j < 3; j++) {}
 
 var plants = [];
 
-var anime_circle = anime({
-  targets: circle.position,
-  x: circle.position.x - 100,
-  y: circle.position.y + 100,
-  loop: true,
-  duration: 3 * 1000,
-  direction: "alternate",
-  easing: "easeInOutSine",
-  update: function(a) {}
-});
+var circle_position_goal = circle.position;
+
+// var anime_circle = anime({
+//   targets: circle.position,
+//   x: circle.position.x - 100,
+//   y: circle.position.y + 100,
+//   loop: true,
+//   duration: 3 * 1000,
+//   direction: "alternate",
+//   easing: "easeInOutSine",
+//   update: function(a) {}
+// });
 
 // =========== ANIMATION ==============
 function onFrame(event) {
@@ -93,11 +102,21 @@ window.onNewVisual_anim = function(datapoint) {
     );
     console.log("Circle scale: ", circle_scale);
   }
+  else if (datapoint.visualValue) {
+    circle_scale = map_range(
+      datapoint.visualValue,
+      100,
+      200000000,
+      0.3,
+      10,
+      true
+    );
+    console.log("Circle standard scale: ", circle_scale);
+  }
 
   circle.scaling = circle_scale;
 
-  // console.log(anime_circle);
-  // circle.bounds.width =
+  circle2.visible = !circle2.visible;
 };
 
 paperReady();

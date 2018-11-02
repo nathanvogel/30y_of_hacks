@@ -14,6 +14,7 @@ $.getJSON("data/events.json", json => {
     return a.timestamp - b.timestamp;
   });
   dataset = json;
+  console.log("Total dataset length:", dataset.length);
   dataReady();
 });
 
@@ -50,11 +51,17 @@ function createBlock(data) {
 
   var title = document.createElement("div");
   title.className = "block-title";
-  title.textContent = data.name;
+  title.textContent = data.year + ", " + data.name;
   eventBlock.appendChild(title);
   var description = document.createElement("div");
   description.className = "block-description";
-  description.innerHTML = data.description;
+  if (data.visualValue) {
+    description.innerHTML = `${data.description}
+    <br/><br/>
+    ${data.visualValue.toLocaleString()}${data.visualValueSuffix}`;
+  } else {
+    description.innerHTML = data.description;
+  }
   eventBlock.appendChild(description);
 
   // Now that we have added all the content, we can calculate the height

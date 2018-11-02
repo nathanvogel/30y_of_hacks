@@ -49,6 +49,9 @@ function createBlock(data) {
   eventBlock.className = "block";
   eventBlockWrapper.appendChild(eventBlock);
 
+  eventBlock.style.width =
+    map_range(data.descriptionText.length, 200, 800, 50, 100, true) + "%";
+
   var title = document.createElement("div");
   title.className = "block-title";
   title.textContent = data.year + ", " + data.name;

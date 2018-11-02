@@ -87,8 +87,8 @@ body > div.dg.ac {
   width: 100%;
   max-height: 75vh;
 
-  border: 1px #ffffff00 solid;
-  background-color: #00000033;
+  border: 0.5px blue solid;
+  background-color: #00000000;
 
   padding-top: 60px;
   padding-left: 12px;
@@ -108,24 +108,25 @@ body > div.dg.ac {
 
 .ancientHistory {
   opacity: 0;
-  border: 1px #ffffff00 solid;
+  border: 0.5px blue solid;
   pointer-events: none;
   transform: translateX(-50vw);
 }
 
 .futureHistory {
-  border: 1px #ffffff00 solid;
+  border: 0.5px blue solid;
   transform: scale(0.8);
 }
 
 .block-title {
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 700;
   /* text-transform: uppercase; */
-  margin-bottom: 12px;
+  margin-bottom: 18px;
 }
 
 .block-description {
+  line-height: 1.7;
   font-size: 16px;
   font-weight: 400;
   overflow-y: auto;
@@ -139,7 +140,7 @@ body > div.dg.ac {
 }
 
 a {
-  color: #6ba6ff;
+  color: blue;
 }
 
 ::-webkit-scrollbar {

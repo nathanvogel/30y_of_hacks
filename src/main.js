@@ -19,7 +19,7 @@ var circle = new Path.Circle({
   radius: 50,
   fillColor: "#FBFBFB", //"#FDE9B5"
   opacity: 1,
-  position: new Point(view.bounds.width / 4, view.bounds.height / 2)
+  position: new Point(view.bounds.width / 2, view.bounds.height / 2)
 });
 circle.visible = true;
 circle.applyMatrix = false;
@@ -101,8 +101,7 @@ window.onNewVisual_anim = function(datapoint) {
       true
     );
     console.log("Circle scale: ", circle_scale);
-  }
-  else if (datapoint.visualValue) {
+  } else if (datapoint.visualValue) {
     circle_scale = map_range(
       datapoint.visualValue,
       100,

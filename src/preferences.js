@@ -35,6 +35,6 @@ var COLORS = {
   theory: [[["yellow", 0.05], ["yellow", 0.5], ["black", 1]]],
   media: [[["blue", 0.05], ["aqua", 0.8], ["black", 1]]],
   foundation: [[["purple", 0.05], ["purple", 0.7], ["black", 1]]],
-  law: [[["black", 0.5], ["blue", 0.8], ["black", 1]]],
+  law: [[["black", 0.5], ["blue", 0.8], ["blue", 0.9], ["black", 1]]],
   meeting: [[["teal", 0.5], ["navy", 0.8], ["black", 1]]]
 };

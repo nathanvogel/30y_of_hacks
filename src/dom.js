@@ -89,7 +89,7 @@ function indexToId(index) {
   return "event-" + index;
 }
 
-function goToBlock(newIndex) {
+function goToBlock(newIndex, isTimelineEvent) {
   if (newIndex >= dataset.length) {
     newIndex = 0;
   }
@@ -99,6 +99,10 @@ function goToBlock(newIndex) {
   var lastIndex = currentBlock;
   updateOldBlocks(lastIndex, newIndex);
   currentBlock = newIndex;
+
+  if (!isTimelineEvent) {
+    timelineGoToId(currentBlock);
+  }
   updateNewBlocks();
   updateContainer();
   window.onNewVisual_renderer(dataset[currentBlock]);

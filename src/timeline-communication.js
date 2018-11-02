@@ -9,9 +9,14 @@ function bindEvent(element, eventName, eventHandler) {
 
 // Send a message to the parent
 var sendMessage = function(msg) {
+  console.log("Send", msg);
   // Make sure you are sending a string, and to stringify JSON
   window.parent.postMessage(msg, "*");
 };
+
+function timelineGoToId(id) {
+  sendMessage(JSON.stringify({ id: id }));
+}
 
 // Listen to messages from parent window
 bindEvent(window, "message", e => {
@@ -19,7 +24,7 @@ bindEvent(window, "message", e => {
   var data = JSON.parse(e.data);
   console.log(data.id);
   // if (typeof data.id === "number") {
-  goToBlock(parseInt(data.id));
+  goToBlock(parseInt(data.id), true);
   // }
 });
 

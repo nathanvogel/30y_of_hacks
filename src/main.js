@@ -25,7 +25,7 @@ tmp.visible = true;
 tmp.applyMatrix = false;
 
 var circles = [];
-for (var j = 0; j < 3; j++) {
+for (var j = 0; j < 10; j++) {
   var newC = {
     goal_pos: tmp.position.clone(),
     goal_scaling: 1,
@@ -126,8 +126,8 @@ window.onNewVisual_anim = function(datapoint) {
     c.shape.scaling = circle_scale;
     // ### Position
     c.goal_pos = goal;
-    var multipleBlobsFactor = map_range(circle_scale, 0.3, 10, 0.4, 0.0);
-    if (Math.random() < 0.4) {
+    var multipleBlobsFactor = map_range(circle_scale, 0.3, 10, 0.2, 0.0);
+    if (Math.random() < multipleBlobsFactor) {
       goal = getRandomPos(circle_scale);
     }
   }

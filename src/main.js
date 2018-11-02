@@ -5,19 +5,24 @@ var background = new Path.Rectangle({
   size: view.bounds.size,
   fillColor: "#000000"
 });
-var datapoint = new Path.Circle({
+
+var circle = new Path.Circle({
   radius: 50,
-  fillColor: "white", //"#FDE9B5"
+  fillColor: "#FBFBFB", //"#FDE9B5"
   opacity: 1,
   position: new Point(view.bounds.width / 4, view.bounds.height / 2)
 });
-datapoint.visible = true;
+circle.visible = true;
+
+var backgroundStuff = [];
+for (var j = 0; j < 3; j++) {}
+
 var plants = [];
 
-anime({
-  targets: datapoint.position,
-  x: datapoint.position.x - 100,
-  y: datapoint.position.y + 100,
+var anime_circle = anime({
+  targets: circle.position,
+  x: circle.position.x - 100,
+  y: circle.position.y + 100,
   loop: true,
   duration: 3 * 1000,
   direction: "alternate",
@@ -27,12 +32,13 @@ anime({
 
 // =========== ANIMATION ==============
 function onFrame(event) {
-  // datapoint.position = p;
+  // circle.position = p;
+  // background.fillColor = event.count % 30 < 15 ? "#000000" : "#555555";
 }
 
 // =========== INTERACTION ==============
 function onMouseMove(event) {
-  // datapoint.position = event.point;
+  // circle.position = event.point;
 }
 
 function onKeyDown(event) {
@@ -57,3 +63,28 @@ function onKeyDown(event) {
       break;
   }
 }
+
+window.onNewVisual_anim = function(datapoint) {
+  // circle.fillColor = "yellow";
+
+  var possibleStops = COLORS[datapoint.type];
+  var stops = possibleStops[Math.floor(Math.random() * possibleStops.length)];
+  circle.fillColor = {
+    gradient: {
+      stops: stops,
+      radial: true
+    },
+    origin: circle.position,
+    destination: circle.bounds.rightCenter
+  };
+
+  if (datapoint.visualValueSuffix.indexOf("$") >= 0) {
+    ascii_scale = map_range(datapoint.visualValue, 1000000, 1000000000, 16, 6);
+    console.log("Ascii scale: ", ascii_scale);
+  }
+
+  console.log(anime_circle);
+  // circle.bounds.width =
+};
+
+paperReady();

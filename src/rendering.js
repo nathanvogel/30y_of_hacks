@@ -1,3 +1,5 @@
+/* exported onNewVisual_renderer */
+
 // PixiJS checks
 let type = "WebGL";
 if (!PIXI.utils.isWebGLSupported()) {
@@ -38,16 +40,24 @@ paperSprite.width = paperSprite.width / ratio;
 app.stage.addChild(paperSprite);
 paperSprite.visible = true;
 
+// Runtimes
+var filter_displacement, filter_ascii, filter_bloom;
+var loaded = false;
+var lastDatapoint = null;
+
 PIXI.loader
   .add([{ name: "map", url: OPTIONS.displacementFile }])
   .load(imageLoaded);
 
 function imageLoaded() {
+  pixiReady();
+}
+
+function initPixi() {
   setupFilters();
   app.ticker.add(delta => gameLoop(delta));
 }
 
-var filter_displacement, filter_ascii, filter_bloom;
 function setupFilters() {
   // Displacement sprite
   resources.map.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
@@ -79,6 +89,17 @@ function setupFilters() {
   //   quality: OPTIONS.bloomQuality,
   //   resolution: OPTIONS.bloomResolution
   // });
+  // filter_bloom = new PIXI.filters.AdvancedBloomFilter({
+  //   threshold: 0.1,
+  //   bloomScale: 100,
+  //   brightness: 500,
+  //   blur: 100,
+  //   quality: 50,
+  //   resolution: 10,
+  //   pixelSize: 3,
+  //   kernels: [1, 1, 1, 1, 1, 1, 1, 1, 1]
+  // });
+  // filter_bloom = new PIXI.filters.AdvancedBloomFilter();
   filter_bloom = new PIXI.filters.BloomFilter(
     OPTIONS.bloomBlur,
     OPTIONS.bloomQuality
@@ -98,4 +119,17 @@ function gameLoop(delta) {
 
 function toggleDisplacement() {
   filter_displacement.enabled = !filter_displacement.enabled;
+}
+
+function onNewVisual_renderer(datapoint) {
+  var ascii_scale = OPTIONS.asciiScale;
+  if (datapoint.visualValueSuffix.indexOf("$") >= 0) {
+    ascii_scale = map_range(datapoint.visualValue, 1000000, 1000000000, 16, 6);
+    console.log("Ascii scale: ", ascii_scale);
+  }
+  filter_ascii.size = ascii_scale;
+  // switch (datapoint.type) {
+  //   case ""
+  //
+  // }
 }

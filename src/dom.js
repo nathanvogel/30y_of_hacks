@@ -1,26 +1,4 @@
-var dataset = [
-  {
-    name: "DEFCON",
-    type: "event",
-    timestamp: 815183068,
-    year: 1995,
-    description: "uohwefiuwhfu"
-  },
-  {
-    name: "TEST",
-    type: "event",
-    timestamp: 815183068,
-    year: 1995,
-    description: "hdrthdrhtdrh"
-  },
-  {
-    name: "BANK OF AMERICA",
-    type: "hack",
-    timestamp: 815183068,
-    year: 1996,
-    description: "uohwefiuwhfu"
-  }
-];
+var dataset = [];
 
 $.getJSON("data/events.json", json => {
   // Remove hidden elements.
@@ -30,19 +8,13 @@ $.getJSON("data/events.json", json => {
     }
   }
   dataset = json;
-  initBlocks();
+  dataReady();
 });
 
-function w() {
-  return window.innerWidth;
-}
-function h() {
-  return window.innerHeight;
-}
 var container;
 var currentBlock = 0;
 
-function initBlocks() {
+function initDom() {
   container = document.getElementById("container");
 
   prepareDataset();
@@ -50,7 +22,7 @@ function initBlocks() {
     createBlock(dataset[i], i);
   }
 
-  // goToBlock(1);
+  goToBlock(0);
 }
 
 function prepareDataset() {
@@ -114,6 +86,8 @@ function goToBlock(newIndex) {
   updateNewBlocks();
   var e = document.getElementById(indexToId(currentBlock));
   container.style.transform = "translateX(" + -e.parentNode.offsetLeft + "px)";
+  window.onNewVisual_renderer(dataset[currentBlock]);
+  window.onNewVisual_anim(dataset[currentBlock]);
 }
 
 function updateOldBlocks(lastIndex) {

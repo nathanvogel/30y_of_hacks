@@ -10,7 +10,7 @@ var background = new Path.Rectangle({
 
 var circle2 = new Path.Circle({
   radius: 150,
-  fillColor: "#AAAAAA", //"#FDE9B5"
+  fillColor: "#FFFFFF", //"#FDE9B5"
   opacity: 1,
   position: new Point(500, 100)
 });

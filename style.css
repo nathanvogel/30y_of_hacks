@@ -62,20 +62,31 @@ body > div.dg.ac {
   flex-direction: row;
 }
 
-.block {
-  display: flex;
-
-  border: 1px white solid;
-  background-color: #000;
-
+.block-wrapper {
   /* width: 42vh; */
   min-width: 52vh;
   /* max-width: 90%; */
   /* height: 60%; */
   min-height: 240px;
-  max-height: 75%;
+  /* max-height: 75vh; */
 
   margin-right: 50px;
+
+  transition: transform 0.6s;
+  /* transform: translateY(100px); */
+}
+
+/* .currentHistoryWrapper {
+  transition: transform 2s;
+} */
+
+.block {
+  display: flex;
+  width: 100%;
+  max-height: 75vh;
+
+  border: 1px #ffffffff solid;
+  background-color: #000;
 
   padding-top: 60px;
   padding-left: 12px;
@@ -85,6 +96,24 @@ body > div.dg.ac {
   /* Children: */
   align-items: stretch;
   flex-direction: column;
+
+  /* Transitions */
+  opacity: 1;
+  transform: translateX(0vw) scale(1);
+  transition: all 0.6s;
+  /* transition: border 0.6s; */
+}
+
+.ancientHistory {
+  opacity: 0;
+  border: 1px #ffffff00 solid;
+  pointer-events: none;
+  transform: translateX(-50vw);
+}
+
+.futureHistory {
+  border: 1px #ffffff00 solid;
+  transform: scale(0.8);
 }
 
 .block-title {
@@ -95,8 +124,15 @@ body > div.dg.ac {
 
 .block-description {
   font-size: 18px;
+  font-weight: 600;
   overflow-y: auto;
   padding-right: 12px;
+  opacity: 1;
+  transition: opacity 0.6s;
+}
+
+.futureHistory > .block-description {
+  opacity: 0;
 }
 
 a {

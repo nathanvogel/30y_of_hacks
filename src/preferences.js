@@ -21,6 +21,7 @@ var OPTIONS = {
 };
 
 var gui = new dat.gui.GUI();
+gui.close();
 
 var f2 = gui.addFolder("DisplacementFilter");
 f2.add(OPTIONS, "displacementSpeedX", 0.1, 10);

@@ -49,6 +49,8 @@ function initBlocks() {
   for (let i = 0; i < dataset.length; i++) {
     createBlock(dataset[i], i);
   }
+
+  // goToBlock(1);
 }
 
 function prepareDataset() {
@@ -59,10 +61,14 @@ function prepareDataset() {
 }
 
 function createBlock(data) {
+  var eventBlockWrapper = document.createElement("div");
+  eventBlockWrapper.className = "block-wrapper";
+  container.appendChild(eventBlockWrapper);
+
   var eventBlock = document.createElement("div");
   eventBlock.id = data.id;
   eventBlock.className = "block";
-  container.appendChild(eventBlock);
+  eventBlockWrapper.appendChild(eventBlock);
 
   var title = document.createElement("div");
   title.className = "block-title";
@@ -72,6 +78,19 @@ function createBlock(data) {
   description.className = "block-description";
   description.innerHTML = data.description;
   eventBlock.appendChild(description);
+
+  // Now that we have added all the content, we can calculate the height
+  // of the div to determine an offset.
+  if (data.index !== 0) {
+    setRandomY(eventBlockWrapper);
+  }
+}
+
+function setRandomY(element) {
+  var height = element.clientHeight;
+  var available = window.innerHeight - height;
+  var offset = Math.floor((Math.random() - 0.5) * (available + height / 4));
+  element.style.transform = "translateY(" + offset + "px)";
 }
 
 function moveToBlockBy(step) {
@@ -82,15 +101,42 @@ function indexToId(index) {
   return "event-" + index;
 }
 
-function goToBlock(index) {
-  if (index >= dataset.length) {
-    index = 0;
+function goToBlock(newIndex) {
+  if (newIndex >= dataset.length) {
+    newIndex = 0;
   }
-  if (index < 0) {
-    index = dataset.length - 1;
+  if (newIndex < 0) {
+    newIndex = dataset.length - 1;
   }
   var lastIndex = currentBlock;
-  currentBlock = index;
+  updateOldBlocks(lastIndex, newIndex);
+  currentBlock = newIndex;
+  updateNewBlocks();
   var e = document.getElementById(indexToId(currentBlock));
-  container.style.transform = "translateX(" + -e.offsetLeft + "px)";
+  container.style.transform = "translateX(" + -e.parentNode.offsetLeft + "px)";
+}
+
+function updateOldBlocks(lastIndex) {
+  var e = document.getElementById(indexToId(lastIndex));
+  setRandomY(e.parentNode);
+}
+
+function updateNewBlocks() {
+  for (var i = 0; i < container.children.length; i++) {
+    $(container.children[i].firstChild).toggleClass(
+      "ancientHistory",
+      Boolean(i < currentBlock)
+    );
+    $(container.children[i].firstChild).toggleClass(
+      "futureHistory",
+      Boolean(i > currentBlock)
+    );
+    if (i === currentBlock) {
+      container.children[i].style.transform = "translateY(" + 0 + "px)";
+    }
+    // $(container.children[i]).toggleClass(
+    //   "currentHistoryWrapper",
+    //   Boolean(i === currentBlock)
+    // );
+  }
 }

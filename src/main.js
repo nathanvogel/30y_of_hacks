@@ -88,7 +88,8 @@ window.onNewVisual_anim = function(datapoint) {
       1000000,
       1000000000,
       0.3,
-      6
+      6,
+      true
     );
     console.log("Circle scale: ", circle_scale);
   }

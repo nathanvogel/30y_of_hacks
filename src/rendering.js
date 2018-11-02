@@ -28,6 +28,13 @@ app.renderer.autoResize = true;
 app.renderer.resize(window.innerWidth, window.innerHeight);
 // Add the canvas that Pixi automatically created for you to the HTML document
 document.body.insertBefore(app.view, document.getElementById("container"));
+app.stage.updateLayersOrder = function() {
+  app.stage.children.sort((a, b) => {
+    a.zIndex = a.zIndex || 0;
+    b.zIndex = b.zIndex || 0;
+    return b.zIndex - a.zIndex;
+  });
+};
 
 // Link canvas
 let paperCanvas = document.getElementById("canvas");
@@ -36,6 +43,7 @@ let base = new PIXI.BaseTexture.fromCanvas(paperCanvas),
   paperSprite = new PIXI.Sprite(texture);
 paperSprite.height = paperSprite.height / ratio;
 paperSprite.width = paperSprite.width / ratio;
+paperSprite.zIndex = 0;
 // It seems that we're forced to add it as a child. for the transform to be
 // reflected when we use it as mask.
 app.stage.addChild(paperSprite);
@@ -43,6 +51,7 @@ paperSprite.visible = true;
 
 // Runtimes
 var filter_displacement, filter_ascii, filter_bloom;
+// var backgroundSprite;
 
 PIXI.loader
   .add([{ name: "map", url: OPTIONS.displacementFile }])
@@ -53,7 +62,17 @@ function imageLoaded() {
 }
 
 function initPixi() {
+  // backgroundSprite = new PIXI.Sprite(resources.map.texture);
+  // app.stage.addChild(backgroundSprite);
+  // backgroundSprite.zIndex = 10;
+  // backgroundSprite.alpha = 0.95;
+  // backgroundSprite.scale.set(3);
+  // backgroundSprite.x -= OPTIONS.displacementScaleX;
+  // backgroundSprite.y -= OPTIONS.displacementScaleY;
+  // app.stage.updateLayersOrder();
+
   setupFilters();
+
   app.ticker.add(delta => gameLoop(delta));
 }
 
@@ -88,15 +107,15 @@ function setupFilters() {
   //   quality: OPTIONS.bloomQuality,
   //   resolution: OPTIONS.bloomResolution
   // });
-  // filter_bloom = new PIXI.filters.AdvancedBloomFilter({
+  // const filter_advanced_bloom = new PIXI.filters.AdvancedBloomFilter({
   //   threshold: 0.1,
-  //   bloomScale: 100,
-  //   brightness: 500,
-  //   blur: 100,
-  //   quality: 50,
-  //   resolution: 10,
-  //   pixelSize: 3,
-  //   kernels: [1, 1, 1, 1, 1, 1, 1, 1, 1]
+  //   bloomScale: 1,
+  //   brightness: 1,
+  //   blur: 6,
+  //   quality: 4
+  //   // resolution: 10,
+  //   // pixelSize: 3,
+  //   // kernels: [1, 1, 1, 1, 1, 1, 1, 1, 1]
   // });
   // filter_bloom = new PIXI.filters.AdvancedBloomFilter();
   filter_bloom = new PIXI.filters.BloomFilter(
@@ -105,7 +124,8 @@ function setupFilters() {
   );
   filter_bloom.enabled = OPTIONS.bloomEnabled;
   filter_bloom.global = true;
-  app.stage.filters = [filter_displacement, filter_ascii, filter_bloom];
+  paperSprite.filters = [filter_displacement, filter_ascii, filter_bloom];
+  // backgroundSprite.filters = [filter_displacement, filter_ascii, filter_bloom];
 }
 
 function gameLoop(/* arg1 = delta */) {
